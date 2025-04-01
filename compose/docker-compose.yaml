@@ -1,0 +1,25 @@
+services:
+  api-demo:
+    image: tarasov0vas/3-vvt
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USER}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    restart: always
+    depends_on: 
+       - postgres
+
+  postgres:
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "${DB_EXPOSED_PORT}:5432"
+    volumes:
+      - .:/var/lib/postgresql/data
+    restart: always
