@@ -1,0 +1,2 @@
+export const CONNECTION_STRING = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672';
+
